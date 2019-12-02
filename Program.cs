@@ -51,8 +51,7 @@ namespace AdventOfCode
             };
 
             var rocket = Day01_RocketEquation.CreateRocket(modulesMasses);
-            var fuelRequirement = rocket.TotalFuelRequirement;
-            Console.WriteLine($"Day 01: Fuel Equation: {fuelRequirement} fuel required");
+            Console.WriteLine($"Day 01: Fuel Equation: {rocket.TotalFuelRequirement} fuel required");
         }
     }
 }
