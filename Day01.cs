@@ -4,7 +4,19 @@ using System.Linq;
 
 class Day01_RocketEquation
 {   
-    class Rocket
+    public static Rocket CreateRocket(List<int> masses)
+    {
+        var rocket = new Rocket { Modules = new List<RocketModule>() };
+        foreach (var mass in masses)
+        {
+            var newModule = new RocketModule { Mass = mass };
+            rocket.Modules.Add(newModule);
+        }
+
+        return rocket;
+    }
+
+    public class Rocket
     {
         public List<RocketModule> Modules { get; set; }
         public int TotalFuelRequirement 
@@ -17,7 +29,7 @@ class Day01_RocketEquation
         }
     }
 
-    class RocketModule
+    public class RocketModule
     {
         public int Mass { get; set; }
         public int FuelRequirement
