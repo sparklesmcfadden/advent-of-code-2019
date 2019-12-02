@@ -34,7 +34,23 @@ class Day01_RocketEquation
         public int Mass { get; set; }
         public int FuelRequirement
         {
-            get { return CalculateFuelRequirement(this.Mass); }
+            get
+            {
+                var initialFuel = CalculateFuelRequirement(this.Mass);
+                var additionalFuel = CalculateFuelRequirement(initialFuel);
+                var previouslyAddedFuel = additionalFuel;
+                while (previouslyAddedFuel >= 0)
+                {
+                    var fuelToAdd = CalculateFuelRequirement(previouslyAddedFuel);
+                    if (fuelToAdd <= 0)
+                    {
+                        break;
+                    }
+                    additionalFuel += fuelToAdd;
+                    previouslyAddedFuel = fuelToAdd;
+                }
+                return initialFuel + additionalFuel;
+            }
         }
 
         static int CalculateFuelRequirement(int mass)
