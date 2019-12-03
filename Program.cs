@@ -8,8 +8,8 @@ namespace AdventOfCode
     {
         static void Main(string[] args)
         {
-            // Day01();
-            // Day02();
+            Day01();
+            Day02();
             Day03();
         }
 
