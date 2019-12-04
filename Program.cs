@@ -22,7 +22,7 @@ namespace AdventOfCode
             var minTotalDistance = Day03_CrossedWires.GetShortestWireLength(wire1, wire2);
 
             Console.WriteLine($"Day 03, Part 1: Crossed Wires: closest intersection distance is {intersectionDistance}");
-            Console.WriteLine($"Day 03, Part 1: Crossed Wires: shortest intersection distance is {minTotalDistance}");
+            Console.WriteLine($"Day 03, Part 2: Crossed Wires: shortest intersection distance is {minTotalDistance}");
         }
 
         static void Day02()
