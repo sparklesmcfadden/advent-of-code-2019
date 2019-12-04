@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/cavanfarrell/VsCodeProjects/advent-of-code-2019/AdventOfCode.csproj": {}
+    "C:\\Users\\CavanFarrell\\Documents\\VS Code\\AdventOfCode\\AdventOfCode.csproj": {}
   },
   "projects": {
-    "/Users/cavanfarrell/VsCodeProjects/advent-of-code-2019/AdventOfCode.csproj": {
+    "C:\\Users\\CavanFarrell\\Documents\\VS Code\\AdventOfCode\\AdventOfCode.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/cavanfarrell/VsCodeProjects/advent-of-code-2019/AdventOfCode.csproj",
+        "projectUniqueName": "C:\\Users\\CavanFarrell\\Documents\\VS Code\\AdventOfCode\\AdventOfCode.csproj",
         "projectName": "AdventOfCode",
-        "projectPath": "/Users/cavanfarrell/VsCodeProjects/advent-of-code-2019/AdventOfCode.csproj",
-        "packagesPath": "/Users/cavanfarrell/.nuget/packages/",
-        "outputPath": "/Users/cavanfarrell/VsCodeProjects/advent-of-code-2019/obj/",
+        "projectPath": "C:\\Users\\CavanFarrell\\Documents\\VS Code\\AdventOfCode\\AdventOfCode.csproj",
+        "packagesPath": "C:\\Users\\CavanFarrell\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\CavanFarrell\\Documents\\VS Code\\AdventOfCode\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "/Users/cavanfarrell/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\CavanFarrell\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -53,7 +50,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.0.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
