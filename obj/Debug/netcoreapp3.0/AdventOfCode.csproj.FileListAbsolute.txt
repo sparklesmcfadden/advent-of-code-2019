@@ -9,3 +9,14 @@ C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode\obj\Debug\netcoreapp3.0\Adv
 C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode\obj\Debug\netcoreapp3.0\AdventOfCode.AssemblyInfo.cs
 C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode\obj\Debug\netcoreapp3.0\AdventOfCode.dll
 C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode\obj\Debug\netcoreapp3.0\AdventOfCode.pdb
+C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode2019\bin\Debug\netcoreapp3.0\AdventOfCode.exe
+C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode2019\bin\Debug\netcoreapp3.0\AdventOfCode.deps.json
+C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode2019\bin\Debug\netcoreapp3.0\AdventOfCode.runtimeconfig.json
+C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode2019\bin\Debug\netcoreapp3.0\AdventOfCode.runtimeconfig.dev.json
+C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode2019\bin\Debug\netcoreapp3.0\AdventOfCode.dll
+C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode2019\bin\Debug\netcoreapp3.0\AdventOfCode.pdb
+C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode2019\obj\Debug\netcoreapp3.0\AdventOfCode.csprojAssemblyReference.cache
+C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode2019\obj\Debug\netcoreapp3.0\AdventOfCode.AssemblyInfoInputs.cache
+C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode2019\obj\Debug\netcoreapp3.0\AdventOfCode.AssemblyInfo.cs
+C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode2019\obj\Debug\netcoreapp3.0\AdventOfCode.dll
+C:\Users\CavanFarrell\Documents\VS Code\AdventOfCode2019\obj\Debug\netcoreapp3.0\AdventOfCode.pdb
