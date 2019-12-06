@@ -1,3 +1,4 @@
+using System.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,7 @@ class Day05_SunnyWithAChanceOfAsteroids
 
         if (argument1 != 0) return argument2;
 
-        return position;
+        return position + 3;
     }
 
     private static int JumpIfFalse(List<int> program, Instruction instruction, int position)
@@ -66,7 +67,7 @@ class Day05_SunnyWithAChanceOfAsteroids
 
         if (argument1 == 0) return argument2;
 
-        return position;
+        return position + 3;
     }
 
     private static List<int> LessThan(List<int> program, Instruction instruction, int position)
@@ -112,7 +113,6 @@ class Day05_SunnyWithAChanceOfAsteroids
     public static List<int> RunProgram(string programString, int input)
     {
         var program = programString.Split(',').Select(x => Convert.ToInt32(x)).ToList();
-        var stepCount = 0;
         var position = 0;
         var instruction = ProcessInstruction(program[position]);
 
