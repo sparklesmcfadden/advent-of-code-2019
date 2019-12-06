@@ -44,8 +44,8 @@ class Day05_SunnyWithAChanceOfAsteroids
 
     private static void PrintOutput(List<int> program, Instruction instruction, int position)
     {
-        
-        Console.WriteLine(instruction.param1 == 0 ? program[program[position + 1]] : program[position + 1]);
+        var outputValue = instruction.param1 == 0 ? program[program[position + 1]] : program[position + 1];
+        Console.WriteLine(" TEST > " + outputValue);
     }
 
     private static int JumpIfTrue(List<int> program, Instruction instruction, int position)
