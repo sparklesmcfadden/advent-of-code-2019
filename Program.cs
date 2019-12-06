@@ -14,6 +14,15 @@ namespace AdventOfCode
             Day03();
             Day04();
             Day05();
+            Day06();
+        }
+
+        static void Day06()
+        {
+            var orbitCount = Day06_UniversalOrbitMap.Part1("systemMap.txt");
+            Console.WriteLine($"Day 06: Part1: Total Orbits: {orbitCount}");
+            var toSanta = Day06_UniversalOrbitMap.Part2("systemMap.txt");
+            Console.WriteLine($"Day 06: Part2: Transfers to Santa: {toSanta}");
         }
 
         static void Day05()
