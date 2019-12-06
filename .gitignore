@@ -270,3 +270,13 @@ obj/Debug/netcoreapp3.0/AdventOfCode.csproj.FileListAbsolute.txt
 obj/Debug/netcoreapp3.0/AdventOfCode.dll
 obj/Debug/netcoreapp3.0/AdventOfCode.pdb
 obj/Debug/netcoreapp3.0/AdventOfCode.assets.cache
+bin/Debug/netcoreapp3.0/AdventOfCode.dll
+bin/Debug/netcoreapp3.0/AdventOfCode.pdb
+obj/AdventOfCode.csproj.nuget.cache
+obj/AdventOfCode.csproj.nuget.dgspec.json
+obj/AdventOfCode.csproj.nuget.g.props
+obj/project.assets.json
+obj/Debug/netcoreapp3.0/AdventOfCode.assets.cache
+obj/Debug/netcoreapp3.0/AdventOfCode.csproj.FileListAbsolute.txt
+obj/Debug/netcoreapp3.0/AdventOfCode.dll
+obj/Debug/netcoreapp3.0/AdventOfCode.pdb
