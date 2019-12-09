@@ -12,6 +12,7 @@ class IntCodeComputer
     private int _inputPosition;
     public int output;
     private int _position;
+    public int OpCode;
 
     public IntCodeComputer(string path)
     {
@@ -157,44 +158,76 @@ class IntCodeComputer
         _inputs = input;
         var instruction = ProcessInstruction(_program[_position]);
 
-        while (instruction.opCode != 99)
+        while (OpCode != 99)
         {
-            switch (instruction.opCode)
+            OpCode = instruction.opCode;
+            if (_inputPosition > _inputs.Count() - 1 && OpCode == 3) return _program;
+            RunInstruction(OpCode, instruction);
+            if (OpCode == 4)
             {
-                case 1:
-                    Add(instruction);
-                    break;
-                case 2:
-                    Multiply(instruction);
-                    break;
-                case 3:
-                    SaveAt(instruction);
-                    break;
-                case 4:
-                    PrintOutput(instruction);
-                    break;
-                case 5:
-                    JumpIfTrue(instruction);
-                    break;
-                case 6:
-                    JumpIfFalse(instruction);
-                    break;
-                case 7:
-                    LessThan(instruction);
-                    break;
-                case 8:
-                    EqualTo(instruction);
-                    break;
-                case 99:
-                    break;
-                default:
-                    break;
+                Console.WriteLine(output);
+                return _program;
             }
             instruction = ProcessInstruction(_program[_position]);
         }
 
         return _program;
+    }
+    public List<int> RunProgramWithExtraInputs(int[] input, List<int> additionalInputs)
+    {
+        input.ToList().AddRange(additionalInputs);
+        _inputs = input.ToArray();
+        var instruction = ProcessInstruction(_program[_position]);
 
+        while (OpCode != 99)
+        {
+            OpCode = instruction.opCode;
+            if (_inputPosition > _inputs.Count() - 1 && OpCode == 3) return _program;
+            RunInstruction(OpCode, instruction);
+            if (OpCode == 4)
+            {
+                Console.WriteLine(output);
+                return _program;
+            }
+            instruction = ProcessInstruction(_program[_position]);
+        }
+
+        return _program;
+    }
+
+    private void RunInstruction(int opCode, Instruction instruction)
+    {   
+        switch (OpCode)
+        {
+            case 1:
+                Add(instruction);
+                break;
+            case 2:
+                Multiply(instruction);
+                break;
+            case 3:
+                SaveAt(instruction);
+                break;
+            case 4:
+                PrintOutput(instruction);
+                break;
+            case 5:
+                JumpIfTrue(instruction);
+                break;
+            case 6:
+                JumpIfFalse(instruction);
+                break;
+            case 7:
+                LessThan(instruction);
+                break;
+            case 8:
+                EqualTo(instruction);
+                break;
+            case 99:
+                break;
+            default:
+                break;
+        }
     }
 
 }

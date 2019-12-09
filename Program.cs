@@ -15,9 +15,17 @@ namespace AdventOfCode
             // Day04();
             // Day05();
             // Day06();
-            var day7 = new Day07_AmplificationCircuit("Day07_input.txt");
-            var output = day7.FindHighestOutput();
-            Console.WriteLine(output);
+            Day07();
+        }
+
+        static void Day07()
+        {
+            // var day7 = new Day07_AmplificationCircuit("Day07_Input.txt");
+            // var maxOutput = day7.FindHighestOutput();
+            // Console.WriteLine($"Day 07: Part1: Highest Thruster Output: {maxOutput}");
+            var day7Part2 = new Day07_AmplificationCircuit("Day07_Input.txt");
+            var loopOutput = day7Part2.RunFeedbackLoop();
+            Console.WriteLine(loopOutput);
         }
 
         static void Day06()
