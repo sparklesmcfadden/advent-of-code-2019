@@ -34,7 +34,7 @@ class Day06_UniversalOrbitMap
     public static Dictionary<string, GravityWell> GetSystemMap(string path)
     {
         var sytemMap = new Dictionary<string, GravityWell>();
-        var input = File.ReadAllLines("systemMap.txt");
+        var input = File.ReadAllLines(path);
         var id = 0;
 
         foreach (var w in input)
