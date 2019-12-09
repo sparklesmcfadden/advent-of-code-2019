@@ -33,60 +33,54 @@ class IntCodeComputer
         public int param3 { get; set; } = 0;
     }
 
-    private List<int> Add(List<int> program, Instruction instruction)
+    private void Add(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? program[program[_position + 1]] : program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? program[program[_position + 2]] : program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? program[_position + 3] : _position + 3;
+        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
+        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
+        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
 
         var result = argument1 + argument2;
-        program[argument3Pointer] = result;
+        _program[argument3Pointer] = result;
 
         _position = _position + 4;
-
-        return program;
     }
     
-    private List<int> Multiply(List<int> program, Instruction instruction)
+    private void Multiply(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? program[program[_position + 1]] : program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? program[program[_position + 2]] : program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? program[_position + 3] : _position + 3;
+        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
+        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
+        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
 
         var result = argument1 * argument2;
-        program[argument3Pointer] = result;
+        _program[argument3Pointer] = result;
 
         _position = _position + 4;
-
-        return program;
     }
 
-    private List<int> SaveAt(List<int> program, Instruction instruction)
+    private void SaveAt(Instruction instruction)
     {
         var input = _inputs[_inputPosition];
 
-        if (instruction.param1 == 0) program[program[_position + 1]] = input;
-        if (instruction.param1 == 1) program[_position + 1] = input;
+        if (instruction.param1 == 0) _program[_program[_position + 1]] = input;
+        if (instruction.param1 == 1) _program[_position + 1] = input;
 
         _position = _position + 2;
         _inputPosition++;
-
-        return program;
     }
 
-    private void PrintOutput(List<int> program, Instruction instruction)
+    private void PrintOutput(Instruction instruction)
     {
-        var outputValue = instruction.param1 == 0 ? program[program[_position + 1]] : program[_position + 1];
+        var outputValue = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
         // Console.WriteLine(" TEST > " + outputValue);
         output = outputValue;
         _position = _position + 2;
     }
 
-    private void JumpIfTrue(List<int> program, Instruction instruction)
+    private void JumpIfTrue(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? program[program[_position + 1]] : program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? program[program[_position + 2]] : program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? program[_position + 3] : _position + 3;
+        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
+        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
+        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
 
         if (argument1 != 0)
         {
@@ -97,11 +91,11 @@ class IntCodeComputer
         _position = _position + 3;
     }
 
-    private void JumpIfFalse(List<int> program, Instruction instruction)
+    private void JumpIfFalse(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? program[program[_position + 1]] : program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? program[program[_position + 2]] : program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? program[_position + 3] : _position + 3;
+        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
+        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
+        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
 
         if (argument1 == 0)
         {
@@ -112,32 +106,28 @@ class IntCodeComputer
         _position = _position + 3;
     }
 
-    private List<int> LessThan(List<int> program, Instruction instruction)
+    private void LessThan(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? program[program[_position + 1]] : program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? program[program[_position + 2]] : program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? program[_position + 3] : _position + 3;
+        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
+        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
+        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
 
-        if (argument1 < argument2) program[argument3Pointer] = 1;
-        else program[argument3Pointer] = 0;
+        if (argument1 < argument2) _program[argument3Pointer] = 1;
+        else _program[argument3Pointer] = 0;
 
         _position = _position + 4;
-
-        return program;
     }
 
-    private List<int> EqualTo(List<int> program, Instruction instruction)
+    private void EqualTo(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? program[program[_position + 1]] : program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? program[program[_position + 2]] : program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? program[_position + 3] : _position + 3;
+        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
+        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
+        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
 
-        if (argument1 == argument2) program[argument3Pointer] = 1;
-        else program[argument3Pointer] = 0;
+        if (argument1 == argument2) _program[argument3Pointer] = 1;
+        else _program[argument3Pointer] = 0;
 
         _position = _position + 4;
-
-        return program;
     }
 
     private Instruction ProcessInstruction(int instruction)
@@ -172,36 +162,34 @@ class IntCodeComputer
             switch (instruction.opCode)
             {
                 case 1:
-                    _program = Add(_program, instruction);
+                    Add(instruction);
                     break;
                 case 2:
-                    _program = Multiply(_program, instruction);
-                    _position = _position + 4;
+                    Multiply(instruction);
                     break;
                 case 3:
-                    _program = SaveAt(_program, instruction);
+                    SaveAt(instruction);
                     break;
                 case 4:
-                    PrintOutput(_program, instruction);
+                    PrintOutput(instruction);
                     break;
                 case 5:
-                    JumpIfTrue(_program, instruction);
+                    JumpIfTrue(instruction);
                     break;
                 case 6:
-                    JumpIfFalse(_program, instruction);
+                    JumpIfFalse(instruction);
                     break;
                 case 7:
-                    _program = LessThan(_program, instruction);
+                    LessThan(instruction);
                     break;
                 case 8:
-                    _program = EqualTo(_program, instruction);
+                    EqualTo(instruction);
                     break;
                 case 99:
-                    return _program;
+                    break;
                 default:
                     break;
             }
-            Console.WriteLine(instruction.opCode);
             instruction = ProcessInstruction(_program[_position]);
         }
 

@@ -1,6 +1,7 @@
 using System.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 class Day07_AmplificationCircuit
 {
@@ -48,7 +49,6 @@ class Day07_AmplificationCircuit
         foreach (var input in phaseInputs)
         {
             var output = RunPhaseSet(input);
-            Console.WriteLine(output);
             if (output > _highestOutput) _highestOutput = output;
             Reset();
         }
@@ -63,11 +63,11 @@ class Day07_AmplificationCircuit
     private List<int[]> GetAllPhaseInputs()
     {
         var allInputs = new List<int[]>();
-        for (int i = 0; i < 100000; i++)
+        for (int i = 0; i <= 44444; i++)
         {
             var phaseStr = i.ToString("00000");
             var phaseInput = phaseStr.ToCharArray().ToList().Select(c => Convert.ToInt32(c.ToString())).ToArray();
-            if (phaseInput.Any(i => i > 4)) continue;
+            if (phaseInput.Any(i => i > 4) || phaseInput.GroupBy(i => i).Any(d => d.Count() > 1)) continue;
             allInputs.Add(phaseInput);
         }
 

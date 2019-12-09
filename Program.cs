@@ -15,11 +15,8 @@ namespace AdventOfCode
             // Day04();
             // Day05();
             // Day06();
-
-            var day7 = new Day07_AmplificationCircuit("3,31,3,32,1002,32,10,32,1001,31,-2,31,1007,31,0,33,1002,33,7,33,1,33,31,31,1,32,31,31,4,31,99,0,0,0", true);
-            var output = day7.RunPhaseInput(new int[] {1,0,4,3,2});
-            // var day7 = new Day07_AmplificationCircuit("Day07_input.txt");
-            // var output = day7.FindHighestOutput();
+            var day7 = new Day07_AmplificationCircuit("Day07_input.txt");
+            var output = day7.FindHighestOutput();
             Console.WriteLine(output);
         }
 
