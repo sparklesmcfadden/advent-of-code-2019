@@ -11,6 +11,7 @@ class Day07_AmplificationCircuit
     private IntCodeComputer _ampC;
     private IntCodeComputer _ampD;
     private IntCodeComputer _ampE;
+    private List<IntCodeComputer> Processors;
     private int _highestOutput;
     private readonly string _path;
 
@@ -41,6 +42,7 @@ class Day07_AmplificationCircuit
         _ampC = new IntCodeComputer(_path);
         _ampD = new IntCodeComputer(_path);
         _ampE = new IntCodeComputer(_path);
+        startInput = 0;
     }
 
     private bool ShouldHalt()
@@ -58,17 +60,34 @@ class Day07_AmplificationCircuit
     {
         var phaseInputs = GetPart2Phases();
         var loopOutput = 0;
+        var finalOutput = 0;
 
         foreach (var input in phaseInputs)
         {
+            Reset();
             var additionalInputs = new List<int>();
             while (!ShouldHalt())
             {
                 loopOutput = RunPhaseSetWithExtraInputs(input, additionalInputs);
                 additionalInputs.Add(loopOutput);
+                startInput = _ampE.output;
             }
+            if (loopOutput > finalOutput) finalOutput = loopOutput;
         }
 
+        return finalOutput;
+    }
+
+    public int RunOneFeebackLoop(int[] phasing)
+    {
+        var loopOutput = 0;
+        var additionalInputs = new List<int>();
+        while (!ShouldHalt())
+        {
+            loopOutput = RunPhaseSetWithExtraInputs(phasing, additionalInputs);
+            additionalInputs.Add(loopOutput);
+            startInput = _ampE.output;
+        }
         return loopOutput;
     }
 

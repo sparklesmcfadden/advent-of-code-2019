@@ -165,7 +165,7 @@ class IntCodeComputer
             RunInstruction(OpCode, instruction);
             if (OpCode == 4)
             {
-                Console.WriteLine(output);
+                // Console.WriteLine(output);
                 return _program;
             }
             instruction = ProcessInstruction(_program[_position]);
@@ -175,18 +175,18 @@ class IntCodeComputer
     }
     public List<int> RunProgramWithExtraInputs(int[] input, List<int> additionalInputs)
     {
-        input.ToList().AddRange(additionalInputs);
-        _inputs = input.ToArray();
+        var newInput = input.ToList();
+        newInput.AddRange(additionalInputs);
+        _inputs = newInput.ToArray();
         var instruction = ProcessInstruction(_program[_position]);
 
         while (OpCode != 99)
         {
             OpCode = instruction.opCode;
-            if (_inputPosition > _inputs.Count() - 1 && OpCode == 3) return _program;
+            // if (_inputPosition > _inputs.Count() - 1 && OpCode == 3) return _program;
             RunInstruction(OpCode, instruction);
             if (OpCode == 4)
             {
-                Console.WriteLine(output);
                 return _program;
             }
             instruction = ProcessInstruction(_program[_position]);

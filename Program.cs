@@ -20,12 +20,14 @@ namespace AdventOfCode
 
         static void Day07()
         {
-            // var day7 = new Day07_AmplificationCircuit("Day07_Input.txt");
-            // var maxOutput = day7.FindHighestOutput();
-            // Console.WriteLine($"Day 07: Part1: Highest Thruster Output: {maxOutput}");
-            var day7Part2 = new Day07_AmplificationCircuit("Day07_Input.txt");
-            var loopOutput = day7Part2.RunFeedbackLoop();
-            Console.WriteLine(loopOutput);
+            var day7 = new Day07_AmplificationCircuit("Day07_Input.txt");
+            var maxOutput = day7.FindHighestOutput();
+            Console.WriteLine($"Day 07: Part1: Highest Thruster Output: {maxOutput}"); // 398674
+            // var day7Part2 = new Day07_AmplificationCircuit("Day07_Input.txt");
+            // var loopOutput = day7Part2.RunFeedbackLoop();
+            var day7Part2Test = new Day07_AmplificationCircuit("3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5", true);
+            var loopOutput = day7Part2Test.RunOneFeebackLoop(new int[] {9, 8, 7, 6, 5});
+            Console.WriteLine(loopOutput); // 139629729
         }
 
         static void Day06()
