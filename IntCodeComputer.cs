@@ -8,14 +8,16 @@ using System.IO;
 class IntCodeComputer
 {
     private List<int> _program;
+    private string _path;
     private int[] _inputs;
     private int _inputPosition;
-    public int output;
     private int _position;
+    public int output;
     public int OpCode;
 
     public IntCodeComputer(string path)
     {
+        _path = path;
         _program = LoadProgram(path);
         _position = 0;
         _inputPosition = 0;
@@ -32,6 +34,14 @@ class IntCodeComputer
         public int param1 { get; set; } = 0;
         public int param2 { get; set; } = 0;
         public int param3 { get; set; } = 0;
+    }
+
+    public void Reset()
+    {
+        _program = LoadProgram(_path);
+        _position = 0;
+        _inputPosition = 0;
+
     }
 
     private void Add(Instruction instruction)
