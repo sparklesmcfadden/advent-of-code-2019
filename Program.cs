@@ -9,21 +9,32 @@ namespace AdventOfCode
     {
         static void Main(string[] args)
         {
-            Day01(); // 5148424
-            Day02(); // 5098658/5064
-            Day03(); // 227/20286
-            Day04(); // 2081/1411
-            Day05(); // 6731945/9571668
-            Day06(); // 194721/316
-            Day07(); // 398674/39431233
+            // Day01(); // 5148424
+            // Day02(); // 5098658/5064
+            // Day03(); // 227/20286
+            // Day04(); // 2081/1411
+            // Day05(); // 6731945/9571668
+            // Day06(); // 194721/316
+            // Day07(); // 398674/39431233
+            Day08(); // 1703/??
+        }
+
+        static void Day08()
+        {
+            var day8 = new Day08_SpaceImageFormat();
+            var imageData = Utilities.LoadFile("Data/Day08_Input.txt");
+            day8.LoadData(imageData, 25, 6);
+            // var part1Result = day8.FindPart1Layer();
+            // Console.WriteLine($"Day 08: Part 1: Result: {part1Result}"); // 1703
+            day8.CreateLayers();
         }
 
         static void Day07()
         {
-            var day7 = new Day07_AmplificationCircuit("Day07_Input.txt");
+            var day7 = new Day07_AmplificationCircuit("Data/Day07_Input.txt");
             var maxOutput = day7.FindHighestOutput();
             Console.WriteLine($"Day 07: Part1: Highest Thruster Output: {maxOutput}"); // 398674
-            var day7Part2Test = new Day07_Part2(Utilities.LoadProgram("Day07_Input.txt"));
+            var day7Part2Test = new Day07_Part2(Utilities.LoadProgram("Data/Day07_Input.txt"));
             var loopOutput = day7Part2Test.GetHighestLoopOutput();
             Console.WriteLine($"Day 07: Part1: Highest Thruster Loop Output: {loopOutput}"); // 39431233
         }

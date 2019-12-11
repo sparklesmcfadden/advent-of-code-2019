@@ -25,6 +25,12 @@ class Utilities
         return input[0].Split(",").Select(c => Convert.ToInt32(c)).ToList();
     }
 
+    public static string LoadFile(string path)
+    {
+        var file = File.ReadAllLines(path);
+        return file[0];
+    }
+
     public static List<int> LoadProgramFromString(string program)
     {
         return program.Split(",").Select(c => Convert.ToInt32(c)).ToList();
