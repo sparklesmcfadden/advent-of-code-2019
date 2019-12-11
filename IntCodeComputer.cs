@@ -1,5 +1,3 @@
-using System.Reflection.Emit;
-using System.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,24 +6,38 @@ using System.IO;
 class IntCodeComputer
 {
     private List<int> _program;
+    private int _processorId;
     private string _path;
     private int[] _inputs;
-    private int _inputPosition;
+    public int _inputPosition;
     private int _position;
-    public int output;
+    public int Output;
     public int OpCode;
+    public bool Halted;
 
-    public IntCodeComputer(string path)
+    public IntCodeComputer(string path, int processorId)
     {
         _path = path;
         _program = LoadProgram(path);
         _position = 0;
         _inputPosition = 0;
+        _processorId = processorId;
     }
 
-    public IntCodeComputer(string program, bool directLoad)
+    public IntCodeComputer(List<int> program, int processorId)
+    {
+        _program = program;
+        _position = 0;
+        _inputPosition = 0;
+        _processorId = processorId;
+    }
+
+    public IntCodeComputer(string program, bool directLoad, int processorId)
     {
         _program = program.Split(",").Select(c => Convert.ToInt32(c)).ToList();
+        _position = 0;
+        _inputPosition = 0;
+        _processorId = processorId;
     }
 
     private class Instruction
@@ -41,7 +53,11 @@ class IntCodeComputer
         _program = LoadProgram(_path);
         _position = 0;
         _inputPosition = 0;
+    }
 
+    public void Resume()
+    {
+        Halted = false;
     }
 
     private void Add(Instruction instruction)
@@ -83,7 +99,8 @@ class IntCodeComputer
     {
         var outputValue = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
         // Console.WriteLine(" TEST > " + outputValue);
-        output = outputValue;
+        Output = outputValue;
+        Halted = true;
         _position = _position + 2;
     }
 
@@ -168,37 +185,10 @@ class IntCodeComputer
         _inputs = input;
         var instruction = ProcessInstruction(_program[_position]);
 
-        while (OpCode != 99)
+        while (!Halted)
         {
             OpCode = instruction.opCode;
-            if (_inputPosition > _inputs.Count() - 1 && OpCode == 3) return _program;
             RunInstruction(OpCode, instruction);
-            if (OpCode == 4)
-            {
-                // Console.WriteLine(output);
-                return _program;
-            }
-            instruction = ProcessInstruction(_program[_position]);
-        }
-
-        return _program;
-    }
-    public List<int> RunProgramWithExtraInputs(int[] input, List<int> additionalInputs)
-    {
-        var newInput = input.ToList();
-        newInput.AddRange(additionalInputs);
-        _inputs = newInput.ToArray();
-        var instruction = ProcessInstruction(_program[_position]);
-
-        while (OpCode != 99)
-        {
-            OpCode = instruction.opCode;
-            // if (_inputPosition > _inputs.Count() - 1 && OpCode == 3) return _program;
-            RunInstruction(OpCode, instruction);
-            if (OpCode == 4)
-            {
-                return _program;
-            }
             instruction = ProcessInstruction(_program[_position]);
         }
 
@@ -234,6 +224,7 @@ class IntCodeComputer
                 EqualTo(instruction);
                 break;
             case 99:
+                Halted = true;
                 break;
             default:
                 break;

@@ -9,13 +9,13 @@ namespace AdventOfCode
     {
         static void Main(string[] args)
         {
-            // Day01();
-            // Day02();
-            // Day03();
-            // Day04();
-            // Day05();
-            // Day06();
-            Day07();
+            Day01(); // 5148424
+            Day02(); // 5098658/5064
+            Day03(); // 227/20286
+            Day04(); // 2081/1411
+            Day05(); // 6731945/9571668
+            Day06(); // 194721/316
+            Day07(); // 398674/39431233
         }
 
         static void Day07()
@@ -23,11 +23,9 @@ namespace AdventOfCode
             var day7 = new Day07_AmplificationCircuit("Day07_Input.txt");
             var maxOutput = day7.FindHighestOutput();
             Console.WriteLine($"Day 07: Part1: Highest Thruster Output: {maxOutput}"); // 398674
-            // var day7Part2 = new Day07_AmplificationCircuit("Day07_Input.txt");
-            // var loopOutput = day7Part2.RunFeedbackLoop();
-            var day7Part2Test = new Day07_AmplificationCircuit("3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5", true);
-            var loopOutput = day7Part2Test.RunOneFeebackLoop(new int[] {9, 8, 7, 6, 5});
-            Console.WriteLine(loopOutput); // 139629729
+            var day7Part2Test = new Day07_Part2(Utilities.LoadProgram("Day07_Input.txt"));
+            var loopOutput = day7Part2Test.GetHighestLoopOutput();
+            Console.WriteLine($"Day 07: Part1: Highest Thruster Loop Output: {loopOutput}"); // 39431233
         }
 
         static void Day06()
