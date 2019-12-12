@@ -12,32 +12,39 @@ class IntCodeComputer
     public int _inputPosition;
     private int _position;
     public int Output;
+    public string OutputString = "";
     public int OpCode;
     public bool Halted;
+    public bool HaltOnOutput;
+    public bool Stopped;
+    private int _relativeBase = 0;
 
-    public IntCodeComputer(string path, int processorId)
+    public IntCodeComputer(string path, int processorId, bool haltOnOutput = true)
     {
         _path = path;
         _program = LoadProgram(path);
         _position = 0;
         _inputPosition = 0;
         _processorId = processorId;
+        HaltOnOutput = haltOnOutput;
     }
 
-    public IntCodeComputer(List<int> program, int processorId)
+    public IntCodeComputer(List<int> program, int processorId, bool haltOnOutput = true)
     {
         _program = program;
         _position = 0;
         _inputPosition = 0;
         _processorId = processorId;
+        HaltOnOutput = haltOnOutput;
     }
 
-    public IntCodeComputer(string program, bool directLoad, int processorId)
+    public IntCodeComputer(string program, bool directLoad, int processorId, bool haltOnOutput = true)
     {
         _program = program.Split(",").Select(c => Convert.ToInt32(c)).ToList();
         _position = 0;
         _inputPosition = 0;
         _processorId = processorId;
+        HaltOnOutput = haltOnOutput;
     }
 
     private class Instruction
@@ -62,9 +69,9 @@ class IntCodeComputer
 
     private void Add(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
+        var argument1 = FindArgument(instruction.param1, 1);
+        var argument2 = FindArgument(instruction.param2, 2);
+        var argument3Pointer = FindPointer(instruction.param3, 3);
 
         var result = argument1 + argument2;
         _program[argument3Pointer] = result;
@@ -74,9 +81,9 @@ class IntCodeComputer
     
     private void Multiply(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
+        var argument1 = FindArgument(instruction.param1, 1);
+        var argument2 = FindArgument(instruction.param2, 2);
+        var argument3Pointer = FindPointer(instruction.param3, 3);
 
         var result = argument1 * argument2;
         _program[argument3Pointer] = result;
@@ -90,6 +97,7 @@ class IntCodeComputer
 
         if (instruction.param1 == 0) _program[_program[_position + 1]] = input;
         if (instruction.param1 == 1) _program[_position + 1] = input;
+        if (instruction.param1 == 2) _program[_relativeBase + 1] = input;
 
         _position = _position + 2;
         _inputPosition++;
@@ -97,18 +105,18 @@ class IntCodeComputer
 
     private void PrintOutput(Instruction instruction)
     {
-        var outputValue = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
-        // Console.WriteLine(" TEST > " + outputValue);
-        Output = outputValue;
-        Halted = true;
+                var output = FindArgument(instruction.param1, 1);
+        Output = output;
+        OutputString += output + ",";
+        if (HaltOnOutput) Halted = true;
         _position = _position + 2;
     }
 
     private void JumpIfTrue(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
+        var argument1 = FindArgument(instruction.param1, 1);
+        var argument2 = FindArgument(instruction.param2, 2);
+        var argument3Pointer = FindPointer(instruction.param3, 3);
 
         if (argument1 != 0)
         {
@@ -121,9 +129,9 @@ class IntCodeComputer
 
     private void JumpIfFalse(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
+        var argument1 = FindArgument(instruction.param1, 1);
+        var argument2 = FindArgument(instruction.param2, 2);
+        var argument3Pointer = FindPointer(instruction.param3, 3);
 
         if (argument1 == 0)
         {
@@ -136,9 +144,9 @@ class IntCodeComputer
 
     private void LessThan(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
+        var argument1 = FindArgument(instruction.param1, 1);
+        var argument2 = FindArgument(instruction.param2, 2);
+        var argument3Pointer = FindPointer(instruction.param3, 3);
 
         if (argument1 < argument2) _program[argument3Pointer] = 1;
         else _program[argument3Pointer] = 0;
@@ -148,14 +156,61 @@ class IntCodeComputer
 
     private void EqualTo(Instruction instruction)
     {
-        var argument1 = instruction.param1 == 0 ? _program[_program[_position + 1]] : _program[_position + 1];
-        var argument2 = instruction.param2 == 0 ? _program[_program[_position + 2]] : _program[_position + 2];
-        var argument3Pointer = instruction.param3 == 0 ? _program[_position + 3] : _position + 3;
+        var argument1 = FindArgument(instruction.param1, 1);
+        var argument2 = FindArgument(instruction.param2, 2);
+        var argument3Pointer = FindPointer(instruction.param3, 3);
 
         if (argument1 == argument2) _program[argument3Pointer] = 1;
         else _program[argument3Pointer] = 0;
 
         _position = _position + 4;
+    }
+
+    private void AdjustBase(Instruction instruction)
+    {
+        var adjustmentValue = FindArgument(instruction.param1, 1);
+        _relativeBase += adjustmentValue;
+        _position = _position + 2;
+    }
+
+    private int FindPointer(int parameter, int argNumber)
+    {
+        var pointer = 0;
+        switch (parameter)
+        {
+            case 0:
+                pointer = _program[_position + argNumber];
+                break;
+            case 1:
+                pointer = _position + argNumber;
+                break;
+            case 2:
+                pointer = _program[_relativeBase + argNumber];
+                break;
+            default:
+                break;
+        }
+        return pointer;
+    }
+
+    private int FindArgument(int parameter, int argNumber)
+    {
+        var argumentValue = 0;
+        switch (parameter)
+        {
+            case 0:
+                argumentValue = _program[_program[_position + argNumber]];
+                break;
+            case 1:
+                argumentValue = _program[_position + argNumber];
+                break;
+            case 2:
+                argumentValue = _program[_relativeBase + argNumber];
+                break;
+            default:
+                break;
+        }
+        return argumentValue;
     }
 
     private Instruction ProcessInstruction(int instruction)
@@ -180,12 +235,23 @@ class IntCodeComputer
         return input[0].Split(",").Select(c => Convert.ToInt32(c)).ToList();
     }
 
+    private void ExtendMemory()
+    {
+        var memory = new List<int>();
+        for (int i = 0; i < 1024; i++)
+        {
+            memory.Add(0);
+        }
+        _program.AddRange(memory);
+    }
+
     public List<int> RunProgram(int[] input)
     {
+        ExtendMemory();
         _inputs = input;
         var instruction = ProcessInstruction(_program[_position]);
 
-        while (!Halted)
+        while (!Halted && !Stopped)
         {
             OpCode = instruction.opCode;
             RunInstruction(OpCode, instruction);
@@ -223,8 +289,11 @@ class IntCodeComputer
             case 8:
                 EqualTo(instruction);
                 break;
+            case 9:
+                AdjustBase(instruction);
+                break;
             case 99:
-                Halted = true;
+                Stopped = true;
                 break;
             default:
                 break;

@@ -16,7 +16,18 @@ namespace AdventOfCode
             // Day05(); // 6731945/9571668
             // Day06(); // 194721/316
             // Day07(); // 398674/39431233
-            Day08(); // 1703/??
+            // Day08(); // 1703/HCFGE
+            Day09();
+        }
+
+        static void Day09()
+        {
+            // var programString = "109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99";
+            // var program = Utilities.LoadProgramFromString(programString);
+            var program = Utilities.LoadProgram("Data/Day09_Input.txt");
+            var processor = new IntCodeComputer(program, 1, false);
+            processor.RunProgram(new int[] {});
+            Console.WriteLine(processor.OutputString);
         }
 
         static void Day08()
