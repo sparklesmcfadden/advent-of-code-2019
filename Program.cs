@@ -24,9 +24,9 @@ namespace AdventOfCode
             var day8 = new Day08_SpaceImageFormat();
             var imageData = Utilities.LoadFile("Data/Day08_Input.txt");
             day8.LoadData(imageData, 25, 6);
-            // var part1Result = day8.FindPart1Layer();
-            // Console.WriteLine($"Day 08: Part 1: Result: {part1Result}"); // 1703
-            day8.CreateLayers();
+            var part1Result = day8.FindPart1Layer();
+            Console.WriteLine($"Day 08: Part 1: Result: {part1Result}"); // 1703
+            day8.RenderImage();
         }
 
         static void Day07()

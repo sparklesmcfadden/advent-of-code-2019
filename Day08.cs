@@ -9,6 +9,7 @@ class Day08_SpaceImageFormat
     private int _width;
     private List<int[]> _rawLayers = new List<int[]>();
     public List<Layer> Layers = new List<Layer>();
+    public List<List<int>> Image = new List<List<int>>();
 
     public class Layer
     {
@@ -43,7 +44,47 @@ class Day08_SpaceImageFormat
         }
     }
 
-    public void CreateLayers()
+    private void FlattenImage()
+    {
+        CreateLayers();
+
+        for (int y = 0; y < _height; y++)
+        {
+            var pixelRow = new List<int>();
+            for (int x = 0; x < _width; x++)
+            {
+                pixelRow.Add(EvaluatePixel(x, y));
+            }
+            Image.Add(pixelRow);
+        }
+    }
+
+    public void RenderImage()
+    {
+        CreateLayers();
+        FlattenImage();
+
+        foreach (var pixelRow in Image)
+        {
+            var imageRow = pixelRow.Select(p => p == 0 ? " " : "@");
+            Console.WriteLine(String.Join("", imageRow));
+        }
+    }
+
+    private int EvaluatePixel(int x, int y)
+    {
+        foreach (var layer in Layers)
+        {
+            var layerPixelValue = layer.Contents[x, y];
+            if (layerPixelValue == 1 || layerPixelValue == 0)
+            {
+                return layerPixelValue;
+            }
+        }
+        return 2;
+    }
+
+    private void CreateLayers()
     {
         foreach (var rawLayer in _rawLayers)
         {
@@ -57,7 +98,7 @@ class Day08_SpaceImageFormat
             }
             
             var layerContent = new int[_width, _height];
-            for (int i = 0; i < layerData.Count - 1; i++)
+            for (int i = 0; i < layerData.Count; i++)
             {
                 var row = layerData[i];
                 for (int j = 0; j < _width - 1; j++)
