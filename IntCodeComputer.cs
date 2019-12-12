@@ -185,7 +185,7 @@ class IntCodeComputer
                 pointer = _position + argNumber;
                 break;
             case 2:
-                pointer = _program[Convert.ToInt32(_relativeBase + _program[(int)_position + 1])];
+                pointer = Convert.ToInt32(_relativeBase + _program[(int)(_position + argNumber)]);
                 break;
             default:
                 break;
@@ -193,19 +193,19 @@ class IntCodeComputer
         return pointer;
     }
 
-    private long FindArgument(int parameter, int argNumber)
+    private long FindArgument(long parameter, long argNumber)
     {
         long argumentValue = 0;
         switch (parameter)
         {
             case 0:
-                argumentValue = _program[Convert.ToInt32(_program[(int)_position + argNumber])];
+                argumentValue = _program[Convert.ToInt32(_program[(int)(_position + argNumber)])];
                 break;
             case 1:
                 argumentValue = _program[Convert.ToInt32(_position + argNumber)];
                 break;
             case 2:
-                argumentValue = _program[Convert.ToInt32(_relativeBase + _program[(int)_position + 1])];
+                argumentValue = _program[Convert.ToInt32(_relativeBase + _program[(int)(_position + argNumber)])];
                 break;
             default:
                 break;

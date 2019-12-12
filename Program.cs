@@ -9,28 +9,26 @@ namespace AdventOfCode
     {
         static void Main(string[] args)
         {
-            // Day01(); // 5148424
-            // Day02(); // 5098658/5064
-            // Day03(); // 227/20286
-            // Day04(); // 2081/1411
-            // Day05(); // 6731945/9571668
-            // Day06(); // 194721/316
-            // Day07(); // 398674/39431233
-            // Day08(); // 1703/HCFGE
-            Day09();
+            Day01(); // 5148424
+            Day02(); // 5098658/5064
+            Day03(); // 227/20286
+            Day04(); // 2081/1411
+            Day05(); // 6731945/9571668
+            Day06(); // 194721/316
+            Day07(); // 398674/39431233
+            Day08(); // 1703/HCFGE
+            Day09(); // 3100786347/87023
         }
 
         static void Day09()
         {
-            var programString = "109,1,204,-1,1001,100,1,100,1008,100,16,101,1006,101,0,99";
-            // var programString = "109,4,21001,7,8,9,11102,2,2,14,4,13,99,0"; // 10
-            // var programString = "1102,34915192,34915192,7,4,7,99,0"; // big number
-            // var programString = "104,1125899906842624,99"; // big number
-            var program = Utilities.LoadProgramFromString(programString);
-            // var program = Utilities.LoadProgram("Data/Day09_Input.txt");
+            var program = Utilities.LoadProgram("Data/Day09_Input.txt");
             var processor = new IntCodeComputer(program, 1, false);
-            processor.RunProgram(new long[] {});
-            Console.WriteLine(processor.OutputString);
+            processor.RunProgram(new long[] {1});
+            Console.WriteLine($"Day 09: Part 1: BOOST keycode: {processor.OutputString}");
+            var part2Processor = new IntCodeComputer(program, 1, false);
+            part2Processor.RunProgram(new long[] {2});
+            Console.WriteLine($"Day 09: Part 2: Distress Call Coordinates: {part2Processor.OutputString}");
         }
 
         static void Day08()
