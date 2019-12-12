@@ -33,6 +33,32 @@ class Day08_SpaceImageFormat
         GetRawLayers();
     }
 
+    public void RenderImage()
+    {
+        CreateLayers();
+        FlattenImage();
+
+        foreach (var pixelRow in Image)
+        {
+            var imageRow = pixelRow.Select(p => p == 0 ? " " : "@");
+            Console.WriteLine(String.Join("", imageRow));
+        }
+    }
+
+    public int FindPart1Layer()
+    {
+        var selectedLayer = _rawLayers.Select(l => 
+        new {
+            Zeros = l.Count(i => i == 0),
+            Layer = l
+        }).OrderByDescending(l => l.Zeros).Last();
+
+        var ones = selectedLayer.Layer.Count(i => i == 1);
+        var twos = selectedLayer.Layer.Count(i => i == 2);
+
+        return ones * twos;
+    }
+
     private void GetRawLayers()
     {
         var layerLength = _width * _height;
@@ -56,18 +82,6 @@ class Day08_SpaceImageFormat
                 pixelRow.Add(EvaluatePixel(x, y));
             }
             Image.Add(pixelRow);
-        }
-    }
-
-    public void RenderImage()
-    {
-        CreateLayers();
-        FlattenImage();
-
-        foreach (var pixelRow in Image)
-        {
-            var imageRow = pixelRow.Select(p => p == 0 ? " " : "@");
-            Console.WriteLine(String.Join("", imageRow));
         }
     }
 
@@ -109,19 +123,5 @@ class Day08_SpaceImageFormat
             layer.Contents = layerContent;
             Layers.Add(layer);
         }
-    }
-
-    public int FindPart1Layer()
-    {
-        var selectedLayer = _rawLayers.Select(l => 
-        new {
-            Zeros = l.Count(i => i == 0),
-            Layer = l
-        }).OrderByDescending(l => l.Zeros).Last();
-
-        var ones = selectedLayer.Layer.Count(i => i == 1);
-        var twos = selectedLayer.Layer.Count(i => i == 2);
-
-        return ones * twos;
     }
 }
