@@ -5,15 +5,15 @@ using System.Linq;
 class Day07_Part2
 {
     private List<IntCodeComputer> Processors = new List<IntCodeComputer>();
-    private readonly List<int> _program;
-    public int HighestOutput = 0;
+    private readonly List<long> _program;
+    public long HighestOutput = 0;
 
     public Day07_Part2(string path)
     {
         _program = Utilities.LoadProgram(path);
     }
 
-    public Day07_Part2(List<int> program)
+    public Day07_Part2(List<long> program)
     {
         _program = program;
     }
@@ -24,13 +24,13 @@ class Day07_Part2
         return false;
     }
 
-    private List<int[]> GetPhases()
+    private List<long[]> GetPhases()
     {
         var initialPhases = Utilities.GetPhaseInputs(55555, 99999);
         return initialPhases.Where(p => !p.Any(i => i < 5)).ToList();
     }
 
-    public int GetHighestLoopOutput()
+    public long GetHighestLoopOutput()
     {
         var phases = GetPhases();
 
@@ -46,9 +46,9 @@ class Day07_Part2
         return HighestOutput;
     }
 
-    public int RunProgram(int[] phasing)
+    public long RunProgram(long[] phasing)
     {
-        var inputStack = new List<int> {0};
+        var inputStack = new List<long> {0};
         Processors = new List<IntCodeComputer>();
 
         for (int i = 0; i < phasing.Count(); i++)
@@ -62,11 +62,11 @@ class Day07_Part2
             for (int i = 0; i < Processors.Count; i++)
             {
                 var processor = Processors[i];
-                var programInput = new List<int> {phasing[i]};
+                var programInput = new List<long> {phasing[i]};
                 programInput.AddRange(inputStack);
                 processor.Resume();
                 processor.RunProgram(programInput.ToArray());
-                lastOutput = processor.Output;
+                lastOutput = (int)processor.Output;
                 inputStack[inputStack.Count - 1] = lastOutput;
             }
             inputStack.Add(lastOutput);

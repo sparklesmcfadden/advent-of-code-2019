@@ -6,23 +6,23 @@ using Newtonsoft.Json;
 
 class Utilities
 {
-    public static List<int[]> GetPhaseInputs(int start, int end)
+    public static List<long[]> GetPhaseInputs(int start, int end)
     {
-        var allInputs = new List<int[]>();
+        var allInputs = new List<long[]>();
         for (int i = start; i <= end; i++)
         {
             var phaseStr = i.ToString("00000");
-            var phaseInput = phaseStr.ToCharArray().ToList().Select(c => Convert.ToInt32(c.ToString())).ToArray();
+            var phaseInput = phaseStr.ToCharArray().ToList().Select(c => Convert.ToInt64(c.ToString())).ToArray();
             if (phaseInput.GroupBy(i => i).Any(d => d.Count() > 1)) continue;
             allInputs.Add(phaseInput);
         }
 
         return allInputs;
     }
-    public static List<int> LoadProgram(string path)
+    public static List<long> LoadProgram(string path)
     {
         var input = File.ReadAllLines(path);
-        return input[0].Split(",").Select(c => Convert.ToInt32(c)).ToList();
+        return input[0].Split(",").Select(c => Convert.ToInt64(c)).ToList();
     }
 
     public static string LoadFile(string path)
@@ -31,9 +31,9 @@ class Utilities
         return file[0];
     }
 
-    public static List<int> LoadProgramFromString(string program)
+    public static List<long> LoadProgramFromString(string program)
     {
-        return program.Split(",").Select(c => Convert.ToInt32(c)).ToList();
+        return program.Split(",").Select(c => Convert.ToInt64(c)).ToList();
     }
     public static T Clone<T>(T source)
     {

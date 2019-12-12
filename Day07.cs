@@ -30,26 +30,26 @@ class Day07_AmplificationCircuit
         return _highestOutput;
     }
 
-    public int RunPhaseInput(int[] phaseInput)
+    public int RunPhaseInput(long[] phaseInput)
     {
         return RunPhaseSet(phaseInput);
     }
 
-    private List<int[]> GetPhases()
+    private List<long[]> GetPhases()
     {
         var initialPhases = Utilities.GetPhaseInputs(0, 44444);
         return initialPhases.Where(p => !p.Any(i => i > 4)).ToList();
     }
 
-    private int RunPhaseSet(int[] phaseInput)
+    private int RunPhaseSet(long[] phaseInput)
     {
         var processorOutput = 0;
 
         for (int i = 0; i < phaseInput.Count(); i++)
         {
             var processor = new IntCodeComputer(_path, i);
-            processor.RunProgram(new int[] {phaseInput[i], processorOutput});
-            processorOutput = processor.Output;
+            processor.RunProgram(new long[] {phaseInput[i], processorOutput});
+            processorOutput = (int)processor.Output;
         }
 
         return processorOutput;

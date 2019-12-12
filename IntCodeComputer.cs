@@ -5,19 +5,19 @@ using System.IO;
 
 class IntCodeComputer
 {
-    private List<int> _program;
+    private List<long> _program;
     private int _processorId;
     private string _path;
-    private int[] _inputs;
-    public int _inputPosition;
-    private int _position;
-    public int Output;
+    private long[] _inputs;
+    public long _inputPosition;
+    private long _position;
+    public long Output;
     public string OutputString = "";
     public int OpCode;
     public bool Halted;
     public bool HaltOnOutput;
     public bool Stopped;
-    private int _relativeBase = 0;
+    private long _relativeBase = 0;
 
     public IntCodeComputer(string path, int processorId, bool haltOnOutput = true)
     {
@@ -29,7 +29,7 @@ class IntCodeComputer
         HaltOnOutput = haltOnOutput;
     }
 
-    public IntCodeComputer(List<int> program, int processorId, bool haltOnOutput = true)
+    public IntCodeComputer(List<long> program, int processorId, bool haltOnOutput = true)
     {
         _program = program;
         _position = 0;
@@ -40,7 +40,7 @@ class IntCodeComputer
 
     public IntCodeComputer(string program, bool directLoad, int processorId, bool haltOnOutput = true)
     {
-        _program = program.Split(",").Select(c => Convert.ToInt32(c)).ToList();
+        _program = program.Split(",").Select(c => Convert.ToInt64(c)).ToList();
         _position = 0;
         _inputPosition = 0;
         _processorId = processorId;
@@ -74,7 +74,7 @@ class IntCodeComputer
         var argument3Pointer = FindPointer(instruction.param3, 3);
 
         var result = argument1 + argument2;
-        _program[argument3Pointer] = result;
+        _program[(int)argument3Pointer] = result;
 
         _position = _position + 4;
     }
@@ -86,7 +86,7 @@ class IntCodeComputer
         var argument3Pointer = FindPointer(instruction.param3, 3);
 
         var result = argument1 * argument2;
-        _program[argument3Pointer] = result;
+        _program[(int)argument3Pointer] = result;
 
         _position = _position + 4;
     }
@@ -95,9 +95,9 @@ class IntCodeComputer
     {
         var input = _inputs[_inputPosition];
 
-        if (instruction.param1 == 0) _program[_program[_position + 1]] = input;
-        if (instruction.param1 == 1) _program[_position + 1] = input;
-        if (instruction.param1 == 2) _program[_relativeBase + 1] = input;
+        if (instruction.param1 == 0) _program[Convert.ToInt32(_program[(int)_position + 1])] = input;
+        if (instruction.param1 == 1) _program[(int)_position + 1] = input;
+        if (instruction.param1 == 2) _program[(int)_relativeBase] = input;
 
         _position = _position + 2;
         _inputPosition++;
@@ -105,7 +105,7 @@ class IntCodeComputer
 
     private void PrintOutput(Instruction instruction)
     {
-                var output = FindArgument(instruction.param1, 1);
+        var output = FindArgument(instruction.param1, 1);
         Output = output;
         OutputString += output + ",";
         if (HaltOnOutput) Halted = true;
@@ -148,8 +148,8 @@ class IntCodeComputer
         var argument2 = FindArgument(instruction.param2, 2);
         var argument3Pointer = FindPointer(instruction.param3, 3);
 
-        if (argument1 < argument2) _program[argument3Pointer] = 1;
-        else _program[argument3Pointer] = 0;
+        if (argument1 < argument2) _program[(int)argument3Pointer] = 1;
+        else _program[(int)argument3Pointer] = 0;
 
         _position = _position + 4;
     }
@@ -160,8 +160,8 @@ class IntCodeComputer
         var argument2 = FindArgument(instruction.param2, 2);
         var argument3Pointer = FindPointer(instruction.param3, 3);
 
-        if (argument1 == argument2) _program[argument3Pointer] = 1;
-        else _program[argument3Pointer] = 0;
+        if (argument1 == argument2) _program[(int)argument3Pointer] = 1;
+        else _program[(int)argument3Pointer] = 0;
 
         _position = _position + 4;
     }
@@ -173,19 +173,19 @@ class IntCodeComputer
         _position = _position + 2;
     }
 
-    private int FindPointer(int parameter, int argNumber)
+    private long FindPointer(long parameter, long argNumber)
     {
-        var pointer = 0;
+        long pointer = 0;
         switch (parameter)
         {
             case 0:
-                pointer = _program[_position + argNumber];
+                pointer = _program[Convert.ToInt32(_position + argNumber)];
                 break;
             case 1:
                 pointer = _position + argNumber;
                 break;
             case 2:
-                pointer = _program[_relativeBase + argNumber];
+                pointer = _program[Convert.ToInt32(_relativeBase + _program[(int)_position + 1])];
                 break;
             default:
                 break;
@@ -193,19 +193,19 @@ class IntCodeComputer
         return pointer;
     }
 
-    private int FindArgument(int parameter, int argNumber)
+    private long FindArgument(int parameter, int argNumber)
     {
-        var argumentValue = 0;
+        long argumentValue = 0;
         switch (parameter)
         {
             case 0:
-                argumentValue = _program[_program[_position + argNumber]];
+                argumentValue = _program[Convert.ToInt32(_program[(int)_position + argNumber])];
                 break;
             case 1:
-                argumentValue = _program[_position + argNumber];
+                argumentValue = _program[Convert.ToInt32(_position + argNumber)];
                 break;
             case 2:
-                argumentValue = _program[_relativeBase + argNumber];
+                argumentValue = _program[Convert.ToInt32(_relativeBase + _program[(int)_position + 1])];
                 break;
             default:
                 break;
@@ -213,7 +213,7 @@ class IntCodeComputer
         return argumentValue;
     }
 
-    private Instruction ProcessInstruction(int instruction)
+    private Instruction ProcessInstruction(long instruction)
     {
         var result = new Instruction();
 
@@ -229,15 +229,15 @@ class IntCodeComputer
         return result;
     }
 
-    public static List<int> LoadProgram(string path)
+    public static List<long> LoadProgram(string path)
     {
         var input = File.ReadAllLines(path);
-        return input[0].Split(",").Select(c => Convert.ToInt32(c)).ToList();
+        return input[0].Split(",").Select(c => Convert.ToInt64(c)).ToList();
     }
 
     private void ExtendMemory()
     {
-        var memory = new List<int>();
+        var memory = new List<long>();
         for (int i = 0; i < 1024; i++)
         {
             memory.Add(0);
@@ -245,17 +245,17 @@ class IntCodeComputer
         _program.AddRange(memory);
     }
 
-    public List<int> RunProgram(int[] input)
+    public List<long> RunProgram(long[] input)
     {
         ExtendMemory();
         _inputs = input;
-        var instruction = ProcessInstruction(_program[_position]);
+        var instruction = ProcessInstruction(_program[(int)_position]);
 
         while (!Halted && !Stopped)
         {
             OpCode = instruction.opCode;
             RunInstruction(OpCode, instruction);
-            instruction = ProcessInstruction(_program[_position]);
+            instruction = ProcessInstruction(_program[(int)_position]);
         }
 
         return _program;
