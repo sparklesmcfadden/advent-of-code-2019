@@ -110,7 +110,8 @@ class IntCodeComputer
     {
         var output = FindArgument(instruction.param1, 1);
         Output = output;
-        OutputString += output + ",";
+        if (OutputString.Length == 0) OutputString += output;
+        else OutputString += "," + output;
         if (HaltOnOutput) Halted = true;
         _position = _position + 2;
     }

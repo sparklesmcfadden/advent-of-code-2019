@@ -88,7 +88,7 @@ class Day11_SpacePolice
                     imageRow += " ";
                     continue;
                 }
-                imageRow += panel.Color == Color.White ? "#" : " ";
+                imageRow += panel.Color == Color.White ? "@" : " ";
             }
             Console.WriteLine(imageRow);
         }
