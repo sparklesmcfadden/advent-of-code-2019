@@ -27,6 +27,7 @@ class IntCodeComputer
         _inputPosition = 0;
         _processorId = processorId;
         HaltOnOutput = haltOnOutput;
+        ExtendMemory();
     }
 
     public IntCodeComputer(List<long> program, int processorId, bool haltOnOutput = true)
@@ -36,6 +37,7 @@ class IntCodeComputer
         _inputPosition = 0;
         _processorId = processorId;
         HaltOnOutput = haltOnOutput;
+        ExtendMemory();
     }
 
     public IntCodeComputer(string program, bool directLoad, int processorId, bool haltOnOutput = true)
@@ -45,6 +47,7 @@ class IntCodeComputer
         _inputPosition = 0;
         _processorId = processorId;
         HaltOnOutput = haltOnOutput;
+        ExtendMemory();
     }
 
     private class Instruction
@@ -245,9 +248,13 @@ class IntCodeComputer
         _program.AddRange(memory);
     }
 
+    public List<long> RunProgram(List<long> input)
+    {
+        return RunProgram(input.ToArray());
+    }
+
     public List<long> RunProgram(long[] input)
     {
-        ExtendMemory();
         _inputs = input;
         var instruction = ProcessInstruction(_program[(int)_position]);
 

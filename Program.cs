@@ -9,15 +9,27 @@ namespace AdventOfCode
     {
         static void Main(string[] args)
         {
-            Day01(); // 5148424
-            Day02(); // 5098658/5064
-            Day03(); // 227/20286
-            Day04(); // 2081/1411
-            Day05(); // 6731945/9571668
-            Day06(); // 194721/316
-            Day07(); // 398674/39431233
-            Day08(); // 1703/HCFGE
-            Day09(); // 3100786347/87023
+            // Day01(); // 5148424
+            // Day02(); // 5098658/5064
+            // Day03(); // 227/20286
+            // Day04(); // 2081/1411
+            // Day05(); // 6731945/9571668
+            // Day06(); // 194721/316
+            // Day07(); // 398674/39431233
+            // Day08(); // 1703/HCFGE
+            // Day09(); // 3100786347/87023
+            Day11(); // 1885/BFEAGHAF
+        }
+
+        static void Day11()
+        {
+            var day11Part1 = new Day11_SpacePolice("Data/Day11_Input.txt");
+            var part1Panels = day11Part1.PaintSpaceship(new List<long> {});
+            var paintedPanels = part1Panels.GroupBy(p => new {p.X, p.Y}).Count();
+            Console.WriteLine($"Day 11; Part 1: Panels painted: {paintedPanels}");
+            var day11Part2 = new Day11_SpacePolice("Data/Day11_Input.txt");
+            var part2Panels = day11Part2.PaintSpaceship(new List<long> {1});
+            day11Part2.PaintRegCode(part2Panels);
         }
 
         static void Day09()
