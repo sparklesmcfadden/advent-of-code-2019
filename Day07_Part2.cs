@@ -48,7 +48,6 @@ class Day07_Part2
 
     public long RunProgram(long[] phasing)
     {
-        var inputStack = new List<long> {0};
         Processors = new List<IntCodeComputer>();
 
         for (int i = 0; i < phasing.Count(); i++)
@@ -56,20 +55,25 @@ class Day07_Part2
             Processors.Add(new IntCodeComputer(Utilities.Clone(_program), i));
         }
 
+        var firstLoop = true;
         var lastOutput = 0;
         while (!ShouldHalt())
         {
+            var input = new Queue<long>();
             for (int i = 0; i < Processors.Count; i++)
             {
                 var processor = Processors[i];
-                var programInput = new List<long> {phasing[i]};
-                programInput.AddRange(inputStack);
+                if (firstLoop)
+                {
+                    input.Enqueue(phasing[i]);
+                }
+                input.Enqueue(lastOutput);
                 processor.Resume();
-                processor.RunProgram(programInput.ToArray());
+                processor.RunProgram(input);
                 lastOutput = (int)processor.Output;
-                inputStack[inputStack.Count - 1] = lastOutput;
             }
-            inputStack.Add(lastOutput);
+            input.Enqueue(lastOutput);
+            firstLoop = false;
         }
         
         return lastOutput;

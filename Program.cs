@@ -9,26 +9,38 @@ namespace AdventOfCode
     {
         static void Main(string[] args)
         {
-            Day01(); // 5148424
-            Day02(); // 5098658/5064
-            Day03(); // 227/20286
-            Day04(); // 2081/1411
-            Day05(); // 6731945/9571668
-            Day06(); // 194721/316
-            Day07(); // 398674/39431233
-            Day08(); // 1703/HCFGE
-            Day09(); // 3100786347/87023
-            Day11(); // 1885/BFEAGHAF
+            // Day01(); // 5148424
+            // Day02(); // 5098658/5064
+            // Day03(); // 227/20286
+            // Day04(); // 2081/1411
+            // Day05(); // 6731945/9571668
+            // Day06(); // 194721/316
+            // Day07(); // 398674/39431233
+            // Day08(); // 1703/HCFGE
+            // Day09(); // 3100786347/87023
+            // Day11(); // 1885/BFEAGHAF
+            Day13(); // 341
+        }
+
+        static void Day13()
+        {
+            var day13 = new Day13_CarePackage();
+            var blockCount = day13.GetBlockCount();
+            Console.WriteLine($"Day 13; Part 1: Block count: {blockCount}");
+            day13.PlayGame();
         }
 
         static void Day11()
         {
             var day11Part1 = new Day11_SpacePolice("Data/Day11_Input.txt");
-            var part1Panels = day11Part1.PaintSpaceship(new List<long> {});
+            var part1Panels = day11Part1.PaintSpaceship(new Queue<long>());
             var paintedPanels = part1Panels.GroupBy(p => new {p.X, p.Y}).Count();
             Console.WriteLine($"Day 11; Part 1: Panels painted: {paintedPanels}");
             var day11Part2 = new Day11_SpacePolice("Data/Day11_Input.txt");
-            var part2Panels = day11Part2.PaintSpaceship(new List<long> {1});
+
+            var input = new Queue<long>();
+            input.Enqueue(1);
+            var part2Panels = day11Part2.PaintSpaceship(input);
             day11Part2.PaintRegCode(part2Panels);
         }
 
@@ -36,10 +48,14 @@ namespace AdventOfCode
         {
             var program = Utilities.LoadProgram("Data/Day09_Input.txt");
             var processor = new IntCodeComputer(program, 1, false);
-            processor.RunProgram(new long[] {1});
+            var input = new Queue<long>();
+            input.Enqueue(1);
+            processor.RunProgram(input);
             Console.WriteLine($"Day 09: Part 1: BOOST keycode: {processor.OutputString}");
             var part2Processor = new IntCodeComputer(program, 1, false);
-            part2Processor.RunProgram(new long[] {2});
+            input = new Queue<long>();
+            input.Enqueue(2);
+            part2Processor.RunProgram(input);
             Console.WriteLine($"Day 09: Part 2: Distress Call Coordinates: {part2Processor.OutputString}");
         }
 
@@ -60,7 +76,7 @@ namespace AdventOfCode
             Console.WriteLine($"Day 07: Part1: Highest Thruster Output: {maxOutput}"); // 398674
             var day7Part2Test = new Day07_Part2(Utilities.LoadProgram("Data/Day07_Input.txt"));
             var loopOutput = day7Part2Test.GetHighestLoopOutput();
-            Console.WriteLine($"Day 07: Part1: Highest Thruster Loop Output: {loopOutput}"); // 39431233
+            Console.WriteLine($"Day 07: Part2: Highest Thruster Loop Output: {loopOutput}"); // 39431233
         }
 
         static void Day06()

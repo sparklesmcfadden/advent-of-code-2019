@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Utilities;
 
 class Day11_SpacePolice
 {
@@ -17,24 +18,12 @@ class Day11_SpacePolice
         Left = 4
     }
 
-    public enum Color
+    public class Color
     {
-        Black = 0,
-        White = 1
-    }
-
-    public class Panel
-    {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public Color Color { get; set; }
-
-        public Panel(int x, int y, Color color)
-        {
-            X = x;
-            Y = y;
-            Color = color;
-        }
+        public const string Black = " ";
+        public const string White = "#";
+        public const int BlackRaw = 0;
+        public const int WhiteRaw = 1;
     }
 
     public Day11_SpacePolice(string path)
@@ -42,19 +31,19 @@ class Day11_SpacePolice
         _path = path;
     }
 
-    public List<Panel> PaintSpaceship(List<long> input)
+    public List<Pixel> PaintSpaceship(Queue<long> input)
     {        
         var program = Utilities.LoadProgram(_path);
         var processor = new IntCodeComputer(program, 1);
 
-        var panels = new List<Panel>();
+        var panels = new List<Pixel>();
         var currentX = 0;
         var currentY = 0;
 
         while (!processor.Stopped)
         {
             var currentPanelColor = GetCurrentPanelColor(panels, currentX, currentY); // this should be the color of the current location. default black.
-            input.Add((long)currentPanelColor);
+            input.Enqueue((long)currentPanelColor);
 
             var instPair = new List<long>();
             for (int i = 0; i < 2; i++)
@@ -70,44 +59,25 @@ class Day11_SpacePolice
         return panels;
     }
 
-    public void PaintRegCode(List<Panel> panels)
+    public void PaintRegCode(List<Pixel> panels)
     {
-        var maxX = panels.Max(p => p.X);
-        var minX = panels.Min(p => p.X);
-        var maxY = panels.Max(p => p.Y);
-        var minY = panels.Min(p => p.Y);
-
-        for (int y = maxY; y >= minY; y--)
-        {
-            var imageRow = "";
-            for (int x = minX; x <= maxX; x++)
-            {
-                var panel = panels.FirstOrDefault(p => p.X == x && p.Y == y);
-                if (panel == null)
-                {
-                    imageRow += " ";
-                    continue;
-                }
-                imageRow += panel.Color == Color.White ? "@" : " ";
-            }
-            Console.WriteLine(imageRow);
-        }
+        Utilities.RenderScreen(panels, true);    
     }
 
-    public Color GetCurrentPanelColor(List<Panel> panels, int x, int y)
+    public long GetCurrentPanelColor(List<Pixel> panels, int x, int y)
     {
         var touchedPanel = panels.Where(p => p.X == x && p.Y == y).ToList();
-        if (!touchedPanel.Any()) return Color.Black;
+        if (!touchedPanel.Any()) return Color.BlackRaw;
 
-        return touchedPanel.Last().Color;
+        return touchedPanel.Last().Value == Color.Black ? Color.BlackRaw : Color.WhiteRaw;
     }
 
-    public Panel PaintPanel(int x, int y, Color color)
+    public Pixel PaintPanel(int x, int y, string color)
     {
-        return new Panel(x, y, color);
+        return new Pixel(x, y, color);
     }
 
-    private Color GetColor(long instruction)
+    private string GetColor(long instruction)
     {
         return instruction == 1 ? Color.White : Color.Black;
     }

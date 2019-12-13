@@ -45,10 +45,15 @@ class Day07_AmplificationCircuit
     {
         var processorOutput = 0;
 
+
         for (int i = 0; i < phaseInput.Count(); i++)
         {
+            var input = new Queue<long>();
+            input.Enqueue(phaseInput[i]);
+            input.Enqueue(processorOutput);
+
             var processor = new IntCodeComputer(_path, i);
-            processor.RunProgram(new long[] {phaseInput[i], processorOutput});
+            processor.RunProgram(input);
             processorOutput = (int)processor.Output;
         }
 
