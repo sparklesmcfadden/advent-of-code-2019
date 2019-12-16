@@ -45,10 +45,10 @@ class Day13_CarePackage
         _arcadeMachine.EnableLogging = true;
         _arcadeMachine.UpdateAddress(0, 2);
         var input = new Queue<long>();
-        AddInstruction(input);
         var loopCount = 0;
         while (!_arcadeMachine.Stopped)
         {
+            AddInstruction(input);
             _arcadeMachine.RunProgram(input);
             var machineState = Utilities.LoadProgramFromString(_arcadeMachine.OutputString);
             GetPixels(machineState);

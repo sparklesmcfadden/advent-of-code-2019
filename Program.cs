@@ -25,8 +25,9 @@ namespace AdventOfCode
         static void Day13()
         {
             var day13 = new Day13_CarePackage();
-            var blockCount = day13.GetBlockCount();
-            Console.WriteLine($"Day 13; Part 1: Block count: {blockCount}");
+            // var blockCount = day13.GetBlockCount();
+            // Console.WriteLine($"Day 13; Part 1: Block count: {blockCount}");
+            day13 = new Day13_CarePackage();
             day13.PlayGame();
         }
 

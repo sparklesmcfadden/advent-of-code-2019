@@ -63,7 +63,7 @@ class IntCodeComputer
         {
             Console.WriteLine($"Processor {_processorId}: position {_position}, running {GetOpCodeName(OpCode)} with arguments");
             arguments.ForEach(a => Console.WriteLine($"     {arguments.IndexOf(a)}: {a}"));
-            Thread.Sleep(100);
+            // Thread.Sleep(10);
         }
     }
 
@@ -215,6 +215,13 @@ class IntCodeComputer
         _position = _position + 2;
     }
 
+    private void Halt()
+    {
+        Stopped = true;
+
+        LogMessage(new List<long>());
+    }
+
     private long FindPointer(long parameter, long argNumber)
     {
         long pointer = 0;
@@ -352,7 +359,7 @@ class IntCodeComputer
                 AdjustBase();
                 break;
             case 99:
-                Stopped = true;
+                Halt();
                 break;
             default:
                 break;
