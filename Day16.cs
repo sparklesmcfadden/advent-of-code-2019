@@ -26,7 +26,6 @@ class Day16
     {
         RepeatList(repeats);
         var finalIndex = Convert.ToInt32(String.Join("", _inputSignal.Take(8)));
-        Console.WriteLine($"Final Index: {finalIndex}");
         var processedSignal = ProcessPhases(phases);
         var result = processedSignal.GetRange(finalIndex, finalIndex + 8);
         Console.WriteLine(String.Join("", result));
@@ -37,7 +36,6 @@ class Day16
     {
         for (int i = 0; i < phaseCount; i++)
         {
-            Console.WriteLine($"Phase Number {i}");
             var newSignal = ProcessPhase();
             _inputSignal =  newSignal;
         }
