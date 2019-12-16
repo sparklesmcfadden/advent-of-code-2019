@@ -19,7 +19,16 @@ namespace AdventOfCode
             // Day08(); // 1703/HCFGE
             // Day09(); // 3100786347/87023
             // Day11(); // 1885/BFEAGHAF
-            Day13(); // 341
+            // Day13(); // 341
+            Day16();
+        }
+
+        static void Day16()
+        {
+            var day16 = new Day16("Data/Day16_Input.txt");
+            var part1Result= day16.ProcessPhases(100);
+            Console.WriteLine($"Day 16: Part 1: Test Output: {String.Join("", part1Result.Take(8))}");
+            // var result = day16.ProcessSignal(100, 100);
         }
 
         static void Day13()
