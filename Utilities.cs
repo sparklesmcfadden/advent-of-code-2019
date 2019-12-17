@@ -94,4 +94,9 @@ class Utilities
         var serialized = JsonConvert.SerializeObject(source);
         return JsonConvert.DeserializeObject<T>(serialized);
     }
+
+    public static List<long> NumberStringToList(string input)
+    {
+        return input.ToCharArray().ToList().Select(c => Convert.ToInt64(c.ToString())).ToList();
+    }
 }

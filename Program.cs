@@ -23,6 +23,15 @@ namespace AdventOfCode
 
             var day14 = new Day14();
             day14.LoadReactions();
+            Day16();
+        }
+
+        static void Day16()
+        {
+            var day16 = new Day16("Data/Day16_Input.txt");
+            var part1Result= day16.ProcessPhases(100);
+            Console.WriteLine($"Day 16: Part 1: Test Output: {String.Join("", part1Result.Take(8))}");
+            // var result = day16.ProcessSignal(100, 100);
         }
 
         static void Day13()
