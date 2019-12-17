@@ -19,7 +19,10 @@ namespace AdventOfCode
             // Day08(); // 1703/HCFGE
             // Day09(); // 3100786347/87023
             // Day11(); // 1885/BFEAGHAF
-            Day13(); // 341
+            // Day13(); // 341
+
+            var day14 = new Day14();
+            day14.LoadReactions();
         }
 
         static void Day13()
