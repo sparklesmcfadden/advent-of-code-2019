@@ -19,13 +19,14 @@ namespace AdventOfCode
             // Day08(); // 1703/HCFGE
             // Day09(); // 3100786347/87023
             // Day11(); // 1885/BFEAGHAF
-            Day12();
+            // Day12(); // 12490/392733896255168
             // Day13(); // 341
             // Day16();
 
-            var day14 = new Day14();
-            day14.LoadReactions();
-            Day16();
+            // var day14 = new Day14();
+            // day14.LoadReactions();
+
+            // var thing1 = Utilities.LCM(2772, 924);
         }
 
         static void Day16()
@@ -48,7 +49,8 @@ namespace AdventOfCode
         static void Day12()
         {
             var day12 = new Day12();
-            day12.Part1Test("<x=-1, y=0, z=2>|<x=2, y=-10, z=-7>|<x=4, y=-8, z=8>|<x=3, y=5, z=-1>", 10);
+            day12.Part1("Data/Day12_Input.txt", 1000);
+            day12.Part2("Data/Day12_Input.txt");
         }
 
         static void Day11()
