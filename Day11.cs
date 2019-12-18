@@ -40,7 +40,7 @@ class Day11_SpacePolice
         var currentX = 0;
         var currentY = 0;
 
-        while (!processor.Stopped)
+        while (!processor.Halted)
         {
             var currentPanelColor = GetCurrentPanelColor(panels, currentX, currentY); // this should be the color of the current location. default black.
             input.Enqueue((long)currentPanelColor);
