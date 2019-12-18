@@ -22,17 +22,12 @@ namespace AdventOfCode
             // Day12(); // 12490/392733896255168
             // Day13(); // 341
             // Day16();
-
-            // var day14 = new Day14();
-            // day14.LoadReactions();
-
-            // var thing1 = Utilities.LCM(2772, 924);
         }
 
         static void Day16()
         {
             var day16 = new Day16("Data/Day16_Input.txt");
-            var part1Result= day16.ProcessPhases(10);
+            var part1Result = day16.ProcessPhases(10);
             Console.WriteLine($"Day 16: Part 1: Test Output: {String.Join("", part1Result.Take(8))}");
             // var result = day16.ProcessSignal(100, 100);
         }
