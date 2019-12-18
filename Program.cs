@@ -22,6 +22,10 @@ namespace AdventOfCode
             Day12();
             // Day13(); // 341
             // Day16();
+
+            var day14 = new Day14();
+            day14.LoadReactions();
+            Day16();
         }
 
         static void Day16()
