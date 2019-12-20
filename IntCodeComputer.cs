@@ -15,37 +15,37 @@ class IntCodeComputer
     public string OutputString = "";
     public int OpCode;
     private Instruction _instruction;
+    public bool Paused;
     public bool Halted;
-    public bool HaltOnOutput;
-    public bool Stopped;
+    public bool PauseOnOutput;
     private long _relativeBase = 0;
     public bool EnableLogging = false;
 
-    public IntCodeComputer(string path, int processorId, bool haltOnOutput = true)
+    public IntCodeComputer(string path, int processorId, bool pauseOnOutput = true)
     {
         _path = path;
         _program = LoadProgram(path);
         _position = 0;
         _processorId = processorId;
-        HaltOnOutput = haltOnOutput;
+        PauseOnOutput = pauseOnOutput;
         ExtendMemory();
     }
 
-    public IntCodeComputer(List<long> program, int processorId, bool haltOnOutput = true)
+    public IntCodeComputer(List<long> program, int processorId, bool pauseOnOutput = true)
     {
         _program = program;
         _position = 0;
         _processorId = processorId;
-        HaltOnOutput = haltOnOutput;
+        PauseOnOutput = pauseOnOutput;
         ExtendMemory();
     }
 
-    public IntCodeComputer(string program, bool directLoad, int processorId, bool haltOnOutput = true)
+    public IntCodeComputer(string program, bool directLoad, int processorId, bool pauseOnOutput = true)
     {
         _program = program.Split(",").Select(c => Convert.ToInt64(c)).ToList();
         _position = 0;
         _processorId = processorId;
-        HaltOnOutput = haltOnOutput;
+        PauseOnOutput = pauseOnOutput;
         ExtendMemory();
     }
 
@@ -75,13 +75,12 @@ class IntCodeComputer
 
     public void Resume()
     {
-        Halted = false;
+        Paused = false;
     }
 
-    public void SoftReset()
+    public void ClearOutput()
     {
-        Halted = false;
-        Stopped = false;
+        OutputString = "";
     }
 
     public void UpdateAddress(int address, long value)
@@ -119,7 +118,16 @@ class IntCodeComputer
 
     private void SaveAt()
     {
-        var input = _inputs.Dequeue();
+        long input;
+        if (_inputs.Any())
+        {
+            input = _inputs.Dequeue();
+        }
+        else
+        {
+            // input = Convert.ToInt64(Console.ReadLine());
+            input = 1;
+        }
 
         LogMessage(new List<long> {input});
 
@@ -139,7 +147,7 @@ class IntCodeComputer
         Output = output;
         if (OutputString.Length == 0) OutputString += output;
         else OutputString += "," + output;
-        if (HaltOnOutput) Halted = true;
+        if (PauseOnOutput) Paused = true;
         _position = _position + 2;
     }
 
@@ -217,9 +225,14 @@ class IntCodeComputer
 
     private void Halt()
     {
-        Stopped = true;
+        Halted = true;
 
         LogMessage(new List<long>());
+    }
+
+    private void Pause()
+    {
+        Paused = true;
     }
 
     private long FindPointer(long parameter, long argNumber)
@@ -299,7 +312,7 @@ class IntCodeComputer
         _inputs = input;
         _instruction = ProcessInstruction(_program[(int)_position]);
 
-        while (!Halted && !Stopped)
+        while (!Halted && !Paused)
         {
             OpCode = _instruction.opCode;
             RunInstruction();

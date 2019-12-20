@@ -19,6 +19,7 @@ namespace AdventOfCode
             // Day08(); // 1703/HCFGE
             // Day09(); // 3100786347/87023
             // Day11(); // 1885/BFEAGHAF
+            // Day12(); // 12490/392733896255168
             // Day13(); // 341
             // Day16(); // 58100105
         }
@@ -26,7 +27,7 @@ namespace AdventOfCode
         static void Day16()
         {
             var day16 = new Day16("Data/Day16_Input.txt");
-            var part1Result= day16.ProcessPhases(100);
+            var part1Result = day16.ProcessPhases(10);
             Console.WriteLine($"Day 16: Part 1: Test Output: {String.Join("", part1Result.Take(8))}");
             // var result = day16.ProcessSignal(100, 100);
         }
@@ -38,6 +39,13 @@ namespace AdventOfCode
             // Console.WriteLine($"Day 13; Part 1: Block count: {blockCount}");
             day13 = new Day13_CarePackage();
             day13.PlayGame();
+        }
+
+        static void Day12()
+        {
+            var day12 = new Day12();
+            day12.Part1("Data/Day12_Input.txt", 1000);
+            day12.Part2("Data/Day12_Input.txt");
         }
 
         static void Day11()

@@ -42,18 +42,23 @@ class Day13_CarePackage
     {
         var program = Utilities.LoadProgram("Data/Day13_Input.txt");
         _arcadeMachine = new IntCodeComputer(program, 1, false);
-        _arcadeMachine.EnableLogging = true;
+        // _arcadeMachine.EnableLogging = true;
+        _arcadeMachine.PauseOnOutput = true;
         _arcadeMachine.UpdateAddress(0, 2);
         var input = new Queue<long>();
         var loopCount = 0;
-        while (!_arcadeMachine.Stopped)
+        while (!_arcadeMachine.Paused && !_arcadeMachine.Halted)
         {
-            AddInstruction(input);
+            // AddInstruction(input);
             _arcadeMachine.RunProgram(input);
             var machineState = Utilities.LoadProgramFromString(_arcadeMachine.OutputString);
-            GetPixels(machineState);
-            DrawScreen();
-            _arcadeMachine.SoftReset();
+            if (_arcadeMachine.Paused && machineState.Count() == 2640)
+            {
+                GetPixels(machineState);
+                DrawScreen();
+                _arcadeMachine.ClearOutput();
+                _arcadeMachine.Resume();
+            } else _arcadeMachine.Resume();
             loopCount++;
         }
     }
