@@ -20,10 +20,7 @@ namespace AdventOfCode
             // Day09(); // 3100786347/87023
             // Day11(); // 1885/BFEAGHAF
             // Day13(); // 341
-
-            var day14 = new Day14();
-            day14.LoadReactions();
-            Day16();
+            // Day16(); // 58100105
         }
 
         static void Day16()
